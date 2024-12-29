@@ -13,9 +13,9 @@ from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import DummyVecEnv, VecFrameStack
 from stable_baselines3.common.callbacks import BaseCallback
 from loguru import logger
-
+logger.error(retro.data.list_games())
 env = retro.make(game='StreetFighterIISpecialChampionEdition-Genesis')
-env.close()
+#env.close()
 env.observation_space
 env.action_space.sample()
 obs = env.reset()
@@ -29,14 +29,13 @@ for game in range(1):
         time.sleep(0.01)
         print(reward)
 env.close()
-print(info)
+print(info)             
 class StreetFighter(Env): 
     def __init__(self):
         super().__init__()
         self.observation_space = Box(low=0, high=255, shape=(84, 84, 1), dtype=np.uint8)
         self.action_space = MultiBinary(12)
         self.game = retro.make(game='StreetFighterIISpecialChampionEdition-Genesis', use_restricted_actions=retro.Actions.FILTERED)
-    
     def reset(self):
         obs = self.game.reset()
         obs = self.preprocess(obs) 
